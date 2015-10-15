@@ -1,5 +1,7 @@
 package com.cs9k;
 
+import java.util.Random;
+
 public class CitySimMain
 {
 
@@ -15,7 +17,7 @@ public class CitySimMain
     *                                  the first parameter of {@code args} cannot be parsed to a valid long
     */
    public static long parseArgs(String[] args)
-         throws NullPointerException, NumberFormatException, IllegalArgumentException
+         throws NullPointerException, IllegalArgumentException
    {
       if (args.length == 0)
       {
@@ -44,30 +46,9 @@ public class CitySimMain
       }
    }
 
-   public static Location getStartLocation(PRNG prng)
-   {
-      return Location.values()[prng.nextInt(Location.count())];
-   }
 
-   public static Location travelToNextLocation(PRNG prng, Driver driver, Location currentLocation)
-   {
-      int      numPossibleRoutes = currentLocation.getNumberRoutes();
-      Route    chosenRoute       = currentLocation.getRoute(prng.nextInt(numPossibleRoutes));
-      Location destination       = chosenRoute.getDestinationWhenComingFrom(currentLocation);
-      System.out.println(getTravelSummaryString(driver, currentLocation, chosenRoute, destination));
-      return destination;
-   }
 
-   public static String getTravelSummaryString(Driver driver, Location start, Route route, Location end)
-   {
-      return (driver.toString()
-            + " heading from "
-            + start.toString()
-            + " to "
-            + end.toString()
-            + " via "
-            + route.toString());
-   }
+
 
    public static void main(String[] args)
    {
@@ -82,15 +63,16 @@ public class CitySimMain
          return;
       }
 
-      PRNG prng = new PRNG(seed);
+      Random random = new Random(seed);
 
       for (int i = 0; i < 5; i++)
       {
          Driver driver = new Driver(i);
-         Location currentLocation = getStartLocation(prng);
+         CitySim sim = new CitySim(random);
+         Location currentLocation = sim.getStartLocation();
          do
          {
-            currentLocation = travelToNextLocation(prng, driver, currentLocation);
+            currentLocation = sim.travelToNextLocation(driver, currentLocation);
          } while (currentLocation != Location.OUTSIDE_CITY);
          System.out.println(driver.toString() + " has left the city!\n-----");
       }

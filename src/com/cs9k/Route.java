@@ -4,31 +4,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * This was originally an enum, but was changed to a class so it could be mocked.
+ *
  * Created by Matt on 10/13/2015.
  */
-public enum Route
+public class Route
 {
-   MEOW("Meow St."),
-   CHIRP("Chirp St."),
-   FOURTH("Fourth Ave."),
-   FIFTH("Fifth Ave.");
+   public static final Route MEOW = new Route("Meow St.");
+   public static final Route CHIRP = new Route("Chirp St.");
+   public static final Route FOURTH = new Route("Fourth Ave.");
+   public static final Route FIFTH = new Route("Fifth Ave.");
 
    static
    {
-      MEOW.setConnections(true, Location.COFFEESHOP, Location.MALL);
+      MEOW.setConnections(true, Location.COFFEE_SHOP, Location.MALL);
       CHIRP.setConnections(true, Location.BOOKSTORE, Location.UNIVERSITY);
       FOURTH.setConnections(false, Location.OUTSIDE_CITY, Location.MALL, Location.BOOKSTORE, Location.OUTSIDE_CITY);
       FIFTH.setConnections(false,
                            Location.OUTSIDE_CITY,
                            Location.UNIVERSITY,
-                           Location.COFFEESHOP,
+                           Location.COFFEE_SHOP,
                            Location.OUTSIDE_CITY);
    }
 
    private final String                  name;
    private       Map<Location, Location> connections;
 
-   Route(String name)
+   private Route(String name)
    {
       this.name = name;
    }

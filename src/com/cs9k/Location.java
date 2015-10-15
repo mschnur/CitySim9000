@@ -1,23 +1,34 @@
 package com.cs9k;
 
 /**
+ * This was originally an enum, but was changed to a class so it could be mocked.
+ * <p>
  * Created by Matt on 10/12/2015.
  */
-public enum Location
+public class Location
 {
-   MALL("Mall"),
-   BOOKSTORE("Bookstore"),
-   COFFEESHOP("Coffee Shop"),
-   UNIVERSITY("University"),
-   OUTSIDE_CITY("Outside City");
+   public static final Location MALL         = new Location("Mall");
+   public static final Location BOOKSTORE    = new Location("Bookstore");
+   public static final Location COFFEE_SHOP  = new Location("Coffee Shop");
+   public static final Location UNIVERSITY   = new Location("University");
+   public static final Location OUTSIDE_CITY = new Location("Outside City");
 
-   private static final int numLocations = values().length;
+   public static final Location[] values = new Location[]
+         {
+               MALL,
+               BOOKSTORE,
+               COFFEE_SHOP,
+               UNIVERSITY,
+               OUTSIDE_CITY
+         };
+
+   public static final int COUNT = values.length;
 
    static
    {
       MALL.setRoutesOut(Route.FOURTH, Route.MEOW);
       BOOKSTORE.setRoutesOut(Route.FOURTH, Route.CHIRP);
-      COFFEESHOP.setRoutesOut(Route.FIFTH, Route.MEOW);
+      COFFEE_SHOP.setRoutesOut(Route.FIFTH, Route.MEOW);
       UNIVERSITY.setRoutesOut(Route.FIFTH, Route.CHIRP);
       OUTSIDE_CITY.setRoutesOut(Route.FIFTH, Route.FOURTH);
    }
@@ -25,14 +36,9 @@ public enum Location
    private final String  name;
    private       Route[] routesOut;
 
-   Location(String name)
+   private Location(String name)
    {
       this.name = name;
-   }
-
-   public static int count()
-   {
-      return numLocations;
    }
 
    public int getNumberRoutes()

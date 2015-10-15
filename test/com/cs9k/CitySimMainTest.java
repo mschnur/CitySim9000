@@ -1,8 +1,12 @@
 package com.cs9k;
 
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.math.BigInteger;
 
 import static org.junit.Assert.assertEquals;
@@ -11,13 +15,27 @@ import static org.junit.Assert.fail;
 public class CitySimMainTest
 {
 
+   private ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+   @Before
+   public void setUp()
+   {
+      System.setOut(new PrintStream(out));
+   }
+
+   @After
+   public void tearDown()
+   {
+      System.setOut(null);
+   }
+
    /**
     * Tests that a valid long passed as the lone argument from the command line
     * arguments (i.e. represented as a String array) is processed and returned
     * from the parseArgs method.
     */
    @Test
-   public void testParseArgs_validValue() throws Exception
+   public void testParseArgs_validValue()
    {
       long standardTestValue = 4L;
       assertEquals("parseArgs: Standard valid value",
@@ -39,7 +57,7 @@ public class CitySimMainTest
     * to be thrown in the parseArgs method.
     */
    @Test
-   public void testParseArgs_invalidValue() throws Exception
+   public void testParseArgs_invalidValue()
    {
       // test that a number less than min fails
       boolean fail = true;
@@ -105,7 +123,7 @@ public class CitySimMainTest
     * parseArgs method.
     */
    @Test
-   public void testParseArgs_zeroArgs() throws Exception
+   public void testParseArgs_zeroArgs()
    {
       // test that no args fails
       boolean fail = true;
@@ -132,7 +150,7 @@ public class CitySimMainTest
     * parseArgs method.
     */
    @Test
-   public void testParseArgs_moreThanOneArgs() throws Exception
+   public void testParseArgs_moreThanOneArgs()
    {
       // test that more than 1 args fails
       boolean fail = true;
@@ -152,10 +170,5 @@ public class CitySimMainTest
          }
       }
    }
-//
-//   @Test
-//   public void testGetNextDriver_
-
-
 }
 
